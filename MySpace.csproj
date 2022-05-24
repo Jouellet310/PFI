@@ -240,6 +240,7 @@
     <Content Include="Models\MySpaceDBEntities.edmx.diagram">
       <DependentUpon>MySpaceDBEntities.edmx</DependentUpon>
     </Content>
+    <Content Include=".gitignore" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\FilterUnicode.js" />
     <Content Include="Scripts\FormUtilities.js" />
