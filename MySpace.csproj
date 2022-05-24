@@ -226,6 +226,7 @@
       <DependentUpon>MySpaceDBEntities.edmx</DependentUpon>
       <LastGenOutput>MySpaceDBEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="MySpace--DbUpgrade.sql" />
     <Content Include="Scripts\AutoComplete.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
@@ -256,6 +257,7 @@
     <Content Include="Scripts\PartialRefresh.js" />
     <Content Include="Scripts\ratings.js" />
     <Content Include="Scripts\selections.js" />
+    <Content Include="UsersManagementTables.sql" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
