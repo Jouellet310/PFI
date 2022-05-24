@@ -35,19 +35,29 @@ namespace MySpace.Controllers
         {
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
             User user = new User();
-            return View(user);
+
+            return View(new UserSubscriptionWrapper
+            {
+                User = user,
+            });
         }
         [HttpPost]
-        public ActionResult Subscribe(User user)
+        public ActionResult Subscribe(UserSubscriptionWrapper subscription)
         {
+            // accountTypes
+            /*
+                0: Fan
+                1: Artiste
+             */
             if (ModelState.IsValid)
             {
+                User user = subscription.User;
                 user = DB.Add_User(user);
                 SendEmailVerification(user, user.Email);
                 return RedirectToAction("SubscribeDone/" + user.Id.ToString());
             }
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
-            return View(user);
+            return View(subscription);
         }
         public ActionResult SubscribeDone(int id)
         {

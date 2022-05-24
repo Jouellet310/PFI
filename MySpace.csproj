@@ -178,6 +178,7 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserSubscriptionWrapper.cs" />
     <Compile Include="Models\UserType.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
