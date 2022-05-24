@@ -66,10 +66,6 @@ artifacts/
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
-# Ignore database files
-*.mdf
-*.ldf
-
 # StyleCop
 StyleCopReport.xml
 
