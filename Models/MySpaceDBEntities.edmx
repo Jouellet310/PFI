@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MySpaceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MySpaceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="FriendShips">
           <Key>
             <PropertyRef Name="Id" />
@@ -64,6 +64,7 @@
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="Verified" Type="bit" Nullable="false" />
           <Property Name="Blocked" Type="bit" Nullable="false" />
+          <Property Name="Accepted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UserTypes">
           <Key>
@@ -129,8 +130,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MySpaceDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -198,6 +198,7 @@
           <NavigationProperty Name="Gender" Relationship="Self.FK__Users__GenderId__34C8D9D1" FromRole="Users" ToRole="Genders" />
           <NavigationProperty Name="Logins" Relationship="Self.FK__Logins__UserId__38996AB5" FromRole="Users" ToRole="Logins" />
           <NavigationProperty Name="UserType" Relationship="Self.FK__Users__UserTypeI__35BCFE0A" FromRole="Users" ToRole="UserTypes" />
+          <Property Name="Accepted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -322,6 +323,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="MySpaceDBModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
