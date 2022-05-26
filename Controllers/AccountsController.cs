@@ -11,6 +11,8 @@ namespace MySpace.Controllers
     public class AccountsController : Controller
     {
         MySpaceDBEntities DB = new MySpaceDBEntities();
+        const string ADMIN_MAIL = "tristanlepine14@gmail.com";
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -18,6 +20,22 @@ namespace MySpace.Controllers
                 DB.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public void SendEmailAlertNewArtist (User user)
+        {
+            if (user.Id != 0)
+            {
+                string Subject = "MySpace - Nouveau artiste!";
+                bool male = user.Gender.Name == "Monsieur";
+
+                string Body = @"Ceci est un message pour les administrateurs de MySpace.<br/><br/>" +
+                    $"{(male ? "Un nouvel" : "Une nouvelle")} artiste arrive! ALler sur le site afin de l'accepter ou de le refuser." + @"<br/>" +
+                    $"C'est {user.FirstName} {user.LastName}!" + @"<br/><br/>" +
+                    "Ce courriel a été généré automatiquement, veuillez ne pas y répondre.";
+
+                Gmail.SMTP.SendEmail(user.GetFullName(), ADMIN_MAIL, Subject, Body);
+            }
         }
 
         #region Account creation
@@ -44,17 +62,31 @@ namespace MySpace.Controllers
         [HttpPost]
         public ActionResult Subscribe(UserSubscriptionWrapper subscription)
         {
+
             // accountTypes
             /*
                 0: Fan
                 1: Artiste
              */
+
             if (ModelState.IsValid)
             {
                 User user = subscription.User;
+
+                if (int.Parse(subscription.AccountType) == 1)
+                    user.Accepted = false;
+                else
+                    user.Accepted = true;
+
                 user = DB.Add_User(user);
+
                 SendEmailVerification(user, user.Email);
+                
+                if (int.Parse(subscription.AccountType) == 1)
+                    SendEmailAlertNewArtist(user);
+
                 return RedirectToAction("SubscribeDone/" + user.Id.ToString());
+                
             }
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
             return View(subscription);
@@ -307,7 +339,8 @@ namespace MySpace.Controllers
                     ModelState.AddModelError("Email", "Cet usager est déjà connecté.");
                     return View(loginCredential);
                 }
-                //OnlineUsers.AddSessionUser(user.Id);
+                
+                // OnlineUsers.AddSessionUser(user.Id);
                 OnlineUsers.MakeCurrentUser(user);
                 DateTime serverDate = DateTime.Now;
                 DateTime universalDate = serverDate.ToUniversalTime();

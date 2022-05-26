@@ -13,7 +13,7 @@ namespace MySpace.Models
     using System.Collections.Generic;
     
     public partial class User
-    {    
+    {
         public int Id { get; set; }
         public int UserTypeId { get; set; }
         public string FirstName { get; set; }
@@ -25,6 +25,7 @@ namespace MySpace.Models
         public System.DateTime CreationDate { get; set; }
         public bool Verified { get; set; }
         public bool Blocked { get; set; }
+        public bool Accepted { get; set; }
     
         public virtual Gender Gender { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -14,6 +14,7 @@
     @Html.HiddenFor(model => model.User.Verified)
     @Html.HiddenFor(model => model.User.Blocked)
     @Html.HiddenFor(model => model.User.Avatar)
+    @Html.HiddenFor(model => model.User.Accepted)
 
     <div class="form-horizontal">
 
@@ -34,7 +35,7 @@
 
         <fieldset class="formField">
             <legend>@Html.DisplayNameFor(model => model.User.GenderId)</legend>
-            @Helper.ListToRadioButtonGroup("GenderId", (SelectList)ViewBag.Genders, Model.User.GenderId)
+            @Helper.ListToRadioButtonGroup("User.GenderId", (SelectList)ViewBag.Genders, Model.User.GenderId)
             @Html.ValidationMessageFor(model => model.User.GenderId, "", new { @class = "text-danger" })
         </fieldset>
 
