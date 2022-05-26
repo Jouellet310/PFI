@@ -270,6 +270,12 @@ namespace MySpace.Models
             }
             return null;
         }
+
+        public static IEnumerable<Artist> List_UnacceptedArtist (this MySpaceDBEntities DB)
+        {
+            return DB.Artists.Where(a => a.Approved == false).ToList();
+        }
+
         public static bool Remove_FiendShipRequest(this MySpaceDBEntities DB, int userId, int targetUserId)
         {
             User user = DB.Users.Find(userId);

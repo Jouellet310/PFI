@@ -12,39 +12,31 @@ namespace MySpace.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Artist
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Artist()
         {
-            this.Logins = new HashSet<Login>();
-            this.Artists = new HashSet<Artist>();
             this.FanLikes = new HashSet<FanLike>();
             this.Messages = new HashSet<Message>();
+            this.Videos = new HashSet<Video>();
         }
     
         public int Id { get; set; }
-        public int UserTypeId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Avatar { get; set; }
-        public int GenderId { get; set; }
-        public string Password { get; set; }
-        public System.DateTime CreationDate { get; set; }
-        public bool Verified { get; set; }
-        public bool Blocked { get; set; }
-        public bool Accepted { get; set; }
+        public int UserId { get; set; }
+        public string Name { get; set; }
+        public string MainPhotoGUID { get; set; }
+        public string Description { get; set; }
+        public bool Approved { get; set; }
+        public Nullable<int> Visits { get; set; }
+        public Nullable<int> Likes { get; set; }
     
-        public virtual Gender Gender { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Login> Logins { get; set; }
-        public virtual UserType UserType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Artist> Artists { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FanLike> FanLikes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Message> Messages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Video> Videos { get; set; }
     }
 }

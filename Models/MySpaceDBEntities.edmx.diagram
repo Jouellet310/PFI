@@ -15,6 +15,16 @@
         <AssociationConnector Association="MySpaceDBModel.FK__Users__GenderId__34C8D9D1" ManuallyRouted="false" />
         <AssociationConnector Association="MySpaceDBModel.FK__Logins__UserId__38996AB5" ManuallyRouted="false" />
         <AssociationConnector Association="MySpaceDBModel.FK__Users__UserTypeI__35BCFE0A" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Artist" Width="1.5" PointX="4.875" PointY="6.125" />
+        <EntityTypeShape EntityType="MySpaceDBModel.FanLike" Width="1.5" PointX="7.125" PointY="6.875" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Message" Width="1.5" PointX="7.125" PointY="3.75" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Video" Width="1.5" PointX="7.125" PointY="12.75" />
+        <AssociationConnector Association="MySpaceDBModel.fk_artists_users" />
+        <AssociationConnector Association="MySpaceDBModel.fk_fanlikes_artists" />
+        <AssociationConnector Association="MySpaceDBModel.fk_messages_artists" />
+        <AssociationConnector Association="MySpaceDBModel.fk_videos_artists" />
+        <AssociationConnector Association="MySpaceDBModel.fk_fanlikes_users" />
+        <AssociationConnector Association="MySpaceDBModel.fk_messages_users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
