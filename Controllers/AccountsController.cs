@@ -30,7 +30,7 @@ namespace MySpace.Controllers
                 bool male = user.Gender.Name == "Monsieur";
 
                 string Body = @"Ceci est un message pour les administrateurs de MySpace.<br/><br/>" +
-                    $"{(male ? "Un nouvel" : "Une nouvelle")} artiste arrive! ALler sur le site afin de l'accepter ou de le refuser." + @"<br/>" +
+                    $"{(male ? "Un nouvel" : "Une nouvelle")} artiste arrive! Aller sur le site afin de l'accepter ou de le refuser." + @"<br/>" +
                     $"C'est {user.FirstName} {user.LastName}!" + @"<br/><br/>" +
                     "Ce courriel a été généré automatiquement, veuillez ne pas y répondre.";
 
@@ -62,23 +62,37 @@ namespace MySpace.Controllers
         [HttpPost]
         public ActionResult Subscribe(UserSubscriptionWrapper subscription)
         {
-
             // accountTypes
             /*
                 0: Fan
                 1: Artiste
              */
 
+            if (subscription.User.GenderId == 0)
+            {
+                ModelState.AddModelError("GenderId", "Vous devez choisir un genre");
+                ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+                return View(subscription);
+            }
+
             if (ModelState.IsValid)
             {
                 User user = subscription.User;
+                user.AvatarImageData = subscription.AvatarImageData;
 
                 if (int.Parse(subscription.AccountType) == 1)
-                    user.Accepted = false;
-                else
-                    user.Accepted = true;
+                {
+                    user.UserTypeId = 4;
+                    user = DB.Add_User(user);
 
-                user = DB.Add_User(user);
+                    DB.Artists.Add(new Artist
+                    {
+                        Name = $"{user.FirstName} {user.LastName}",
+                        UserId = user.Id
+                    });
+                }
+                else
+                    user = DB.Add_User(user);
 
                 SendEmailVerification(user, user.Email);
                 
@@ -338,6 +352,20 @@ namespace MySpace.Controllers
                 {
                     ModelState.AddModelError("Email", "Cet usager est déjà connecté.");
                     return View(loginCredential);
+                }
+                if (user.UserType.Name == "Artiste")
+                {
+                    Artist artist = DB.Artists.Where(a => a.UserId == user.Id).First();
+                    if (!artist.Approved)
+                    {
+                        ModelState.AddModelError("Email", "Ce courriel appartient à un artiste qui n'à pas encore été validé.");
+                        return View(loginCredential);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Email", "Ce courriel appartient à un artiste.");
+                        return View(loginCredential);
+                    }
                 }
                 
                 // OnlineUsers.AddSessionUser(user.Id);

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<MySpace.Models.Artist>
+
+
+@{
+    ViewBag.Title = "Gestion de requetes d'artistes";
+}
+
+<h2>Gestion des requetes d'artistes</h2>
+
+<div>
+    <br />
+
+    @if (Model.Count() == 0)
+    {
+        <br />
+        <h4>Aucun artiste n'a envoyer de requete...</h4>
+    }
+    else
+    {
+        foreach (var artist in Model)
+        {
+            using (Html.BeginForm("ManageArtistRequests", "Admin", FormMethod.Post, new { id = "Form_" + artist.UserId }))
+            {
+                <div class="row">
+                    @Html.Hidden("UserId", artist.UserId)
+                    @Html.Hidden("Approved", artist.Approved)
+
+                    @Html.Label(artist.Name, "Artiste :")
+                    @Html.TextBox("Name", artist.Name, new { @readonly = "readonly" })
+
+                    @Helper.GlyphiconNoActionWithId("glyphicon-plus", "Accepter l'artiste", "a" + artist.UserId.ToString())
+                    @Helper.GlyphiconNoActionWithId("glyphicon-minus", "Refuser l'artiste", "d" + artist.UserId.ToString())
+                </div>
+            }
+        }
+    }
+</div>
+
+@section Scripts {
+
+    <script defer>
+        console.log("Finished loading script");
+
+        // map GlyphIconNoAction to sending the form to different action
+        $('span[title="Accepter l\'artiste"]').each(function (index) {
+            let myForm = $("#Form_" + this.id.substring(1))
+
+            $("#" + this.id).click(function () {
+                myForm.attr("action", "/Admin/AcceptArtist");
+                myForm.submit();
+            });
+        })
+
+        $('span[title="Refuser l\'artiste"]').each(function (index) {
+            let myForm = $("#Form_" + this.id.substring(1))
+
+            $("#" + this.id).click(function () {
+                myForm.attr("action", "/Admin/DeclineArtist");
+                myForm.submit();
+            });
+        })
+
+
+    </script>
+    
+}

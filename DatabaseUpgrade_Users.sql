@@ -51,12 +51,39 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
+PRINT N'Dropping Default Constraint unnamed constraint on [dbo].[Users]...';
+
+
+GO
+ALTER TABLE [dbo].[Users] DROP CONSTRAINT [DF__Users__Accepted__01142BA1];
+
+
+GO
+IF @@ERROR <> 0
+   AND @@TRANCOUNT > 0
+    BEGIN
+        ROLLBACK;
+    END
+
+IF OBJECT_ID(N'tempdb..#tmpErrors') IS NULL
+    CREATE TABLE [#tmpErrors] (
+        Error INT
+    );
+
+IF @@TRANCOUNT = 0
+    BEGIN
+        INSERT  INTO #tmpErrors (Error)
+        VALUES                 (1);
+        BEGIN TRANSACTION;
+    END
+
+
+GO
 PRINT N'Altering Table [dbo].[Users]...';
 
 
 GO
-ALTER TABLE [dbo].[Users]
-    ADD [Accepted] BIT DEFAULT 0 NOT NULL;
+ALTER TABLE [dbo].[Users] DROP COLUMN [Accepted];
 
 
 GO

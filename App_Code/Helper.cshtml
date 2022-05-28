@@ -40,6 +40,16 @@
     </span>
 }
 
+@helper GlyphiconNoActionWithId(string glyphiconClass, string TooltipMessage, string id, string ToolTipPlacement = "bottom")
+{
+    <span style="cursor: pointer;"
+          id="@id"
+          class="glyphicon glyphiconStyle @glyphiconClass"
+          title="@TooltipMessage"
+          data-placement="@ToolTipPlacement">
+    </span>
+}
+
 @helper GlyphiconAction(string Action, string glyphiconClass, string TooltipMessage, string ToolTipPlacement = "bottom")
 {glyphiconClass += " glyphicon-active";
     var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);

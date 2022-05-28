@@ -221,7 +221,7 @@ namespace MySpace.Models
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             User user = OnlineUsers.GetSessionUser();
-            if (OnlineUsers.GetSessionUser() != null && (!user.Blocked && user.Accepted))
+            if (OnlineUsers.GetSessionUser() != null && !user.Blocked)
             {
                 if (OnlineUsers.SessionExpired(user.Id, RefreshTimeOut))
                 {

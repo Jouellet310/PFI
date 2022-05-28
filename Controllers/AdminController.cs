@@ -11,10 +11,27 @@ namespace MySpace.Controllers
     [AdminAccess]
     public class AdminController : Controller
     {
-        // GET: Admin
+        MySpaceDBEntities DB = new MySpaceDBEntities();
+
         public ActionResult ManageArtistRequests()
         {
-            return View();
+            return View(DB.List_UnacceptedArtist());
+        }
+
+        public ActionResult AcceptArtist (ArtistRequest request)
+        {
+            if (ModelState.IsValid)
+                DB.AcceptArtist(request);
+
+            return RedirectToAction("ManageArtistRequests");
+        }
+
+        public ActionResult DeclineArtist(ArtistRequest request)
+        {
+            if (ModelState.IsValid)
+                DB.DeclineArtist(request);
+
+            return RedirectToAction("ManageArtistRequests");
         }
     }
 }
