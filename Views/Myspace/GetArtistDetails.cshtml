@@ -2,7 +2,7 @@
 @{
     MySpace.Models.User currentUser = MySpace.Models.OnlineUsers.GetSessionUser();
     DateTime currentUserMessageCreationDate = DateTime.Now;
-    var artistImageUrl = "~/ImagesData/ArtistImage/" + Model.MainPhotoGUID + ".Jpeg";
+    var artistImageUrl = Url.Content("~/ImagesData/ArtistImage/" + Model.MainPhotoGUID + ".Jpeg");
     var fanLikes = Model.FanLikes;
     int fanCount = fanLikes.Count;
     bool userIsFollowing = false;
