@@ -11,6 +11,8 @@ namespace MySpace.Controllers
     public class AccountsController : Controller
     {
         MySpaceDBEntities DB = new MySpaceDBEntities();
+        const string ADMIN_MAIL = "tristanlepine14@gmail.com";
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -18,6 +20,22 @@ namespace MySpace.Controllers
                 DB.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public void SendEmailAlertNewArtist (User user)
+        {
+            if (user.Id != 0)
+            {
+                string Subject = "MySpace - Nouveau artiste!";
+                bool male = user.Gender.Name == "Monsieur";
+
+                string Body = @"Ceci est un message pour les administrateurs de MySpace.<br/><br/>" +
+                    $"{(male ? "Un nouvel" : "Une nouvelle")} artiste arrive! Aller sur le site afin de l'accepter ou de le refuser." + @"<br/>" +
+                    $"C'est {user.FirstName} {user.LastName}!" + @"<br/><br/>" +
+                    "Ce courriel a été généré automatiquement, veuillez ne pas y répondre.";
+
+                Gmail.SMTP.SendEmail(user.GetFullName(), ADMIN_MAIL, Subject, Body);
+            }
         }
 
         #region Account creation
@@ -35,19 +53,57 @@ namespace MySpace.Controllers
         {
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
             User user = new User();
-            return View(user);
+
+            return View(new UserSubscriptionWrapper
+            {
+                User = user,
+            });
         }
         [HttpPost]
-        public ActionResult Subscribe(User user)
+        public ActionResult Subscribe(UserSubscriptionWrapper subscription)
         {
+            // accountTypes
+            /*
+                0: Fan
+                1: Artiste
+             */
+
+            if (subscription.User.GenderId == 0)
+            {
+                ModelState.AddModelError("GenderId", "Vous devez choisir un genre");
+                ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+                return View(subscription);
+            }
+
             if (ModelState.IsValid)
             {
-                user = DB.Add_User(user);
+                User user = subscription.User;
+                user.AvatarImageData = subscription.AvatarImageData;
+
+                if (int.Parse(subscription.AccountType) == 1)
+                {
+                    user.UserTypeId = 4;
+                    user = DB.Add_User(user);
+
+                    DB.Artists.Add(new Artist
+                    {
+                        Name = $"{user.FirstName} {user.LastName}",
+                        UserId = user.Id
+                    });
+                }
+                else
+                    user = DB.Add_User(user);
+
                 SendEmailVerification(user, user.Email);
+                
+                if (int.Parse(subscription.AccountType) == 1)
+                    SendEmailAlertNewArtist(user);
+
                 return RedirectToAction("SubscribeDone/" + user.Id.ToString());
+                
             }
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
-            return View(user);
+            return View(subscription);
         }
         public ActionResult SubscribeDone(int id)
         {
@@ -297,7 +353,22 @@ namespace MySpace.Controllers
                     ModelState.AddModelError("Email", "Cet usager est déjà connecté.");
                     return View(loginCredential);
                 }
-                //OnlineUsers.AddSessionUser(user.Id);
+                if (user.UserType.Name == "Artiste")
+                {
+                    Artist artist = DB.Artists.Where(a => a.UserId == user.Id).First();
+                    if (!artist.Approved)
+                    {
+                        ModelState.AddModelError("Email", "Ce courriel appartient à un artiste qui n'à pas encore été validé.");
+                        return View(loginCredential);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Email", "Ce courriel appartient à un artiste.");
+                        return View(loginCredential);
+                    }
+                }
+                
+                // OnlineUsers.AddSessionUser(user.Id);
                 OnlineUsers.MakeCurrentUser(user);
                 DateTime serverDate = DateTime.Now;
                 DateTime universalDate = serverDate.ToUniversalTime();

@@ -77,6 +77,7 @@ namespace MySpace.Models
             user.Password = this.Password;
             user.Blocked = this.Blocked;
             user.Verified = this.Verified;
+            user.Blocked = this.Blocked;
             return user;
         }
     }
