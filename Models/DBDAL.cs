@@ -443,5 +443,94 @@ namespace MySpace.Models
             return true;
         }
 
+        public static bool AddArtistVisit(this MySpaceDBEntities DB, int artistId)
+        {
+            var artist = DB.Artists.Find(artistId);
+            artist.Visits += 1;
+            DB.Entry(artist).State = EntityState.Modified;
+            DB.SaveChanges();
+            return true;
+        }
+
+        public static bool AddLike(this MySpaceDBEntities DB, int artistId)
+        {
+            var artist = DB.Artists.Find(artistId);
+            var currentUser = OnlineUsers.GetSessionUser();
+            var currentLike = DB.FanLikes.Where(f => f.ArtistId == artistId && f.UserId == currentUser.Id).FirstOrDefault();
+
+            if (currentLike == null)
+            {
+                FanLike newFanLike = new FanLike
+                {
+                    UserId = currentUser.Id,
+                    ArtistId = artistId,
+                    Creation = DateTime.Now,
+                    User = currentUser,
+                    Artist = artist
+                };
+                DB.FanLikes.Add(newFanLike);
+                DB.CompileArtistLikes(artist);
+                DB.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool RemoveLike(this MySpaceDBEntities DB, int artistId)
+        {
+            Artist artist = DB.Artists.Find(artistId);
+            var likeToRemove = DB.FanLikes.Where(f => f.UserId == OnlineUsers.CurrentUserId && f.ArtistId == artistId).FirstOrDefault();
+            DB.FanLikes.Remove(likeToRemove);
+            DB.CompileArtistLikes(artist);
+            DB.SaveChanges();
+            return true;
+        }
+
+        public static bool AddMessage(this MySpaceDBEntities DB, int artistId, string text)
+        {
+            Message message = new Message
+            {
+                UserId = OnlineUsers.CurrentUserId,
+                ArtistId = artistId,
+                Text = text,
+                Creation = DateTime.Now
+            };
+
+            DB.Messages.Add(message);
+            DB.SaveChanges();
+            return true;
+        }
+
+        public static bool RemoveMessage(this MySpaceDBEntities DB, int messageId)
+        {
+            var messageToRemove = DB.Messages.Find(messageId);
+            DB.Messages.Remove(messageToRemove);
+            DB.SaveChanges();
+            return true;
+        }
+
+        public static bool CompileArtistLikes(this MySpaceDBEntities DB, Artist artist)
+        {
+            int likeCount = 0;
+            foreach (FanLike like in artist.FanLikes)
+            {
+                //if (!photoRating.User.Blocked)
+                if (!DB.Users.Where(user => user.Id == like.UserId).First().Blocked)
+                {
+                    likeCount++;
+                }
+            }
+            if (likeCount > 0)
+            {
+                artist.Likes = likeCount;
+            }
+            else
+            {
+                artist.Likes = 0;
+            }
+            DB.Entry(artist).State = EntityState.Modified;
+            DB.SaveChanges();
+            return true;
+        }
     }
 }
