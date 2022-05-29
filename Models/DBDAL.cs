@@ -43,7 +43,7 @@ namespace MySpace.Models
             else
                 throw new Exception("Aucune transaction en cours! Impossible de mettre à jour la base de données!");
         }
- 
+
         public static bool EmailAvailable(this MySpaceDBEntities DB, string email, int excludedId = 0)
         {
             User user = DB.Users.Where(u => u.Email.ToLower() == email.ToLower()).FirstOrDefault();
@@ -106,7 +106,7 @@ namespace MySpace.Models
             {
                 BeginTransaction(DB);
                 OnlineUsers.RemoveUser(userToDelete.Id);
-               
+
                 DB.DeleteFriendShips(userId);
                 DB.Logins.RemoveRange(DB.Logins.Where(l => l.UserId == userId));
 
@@ -270,6 +270,48 @@ namespace MySpace.Models
             }
             return null;
         }
+
+        public static Artist AcceptArtist (this MySpaceDBEntities DB, ArtistRequest request)
+        {
+            Artist artist = DB.Artists.Where(a => a.UserId == request.UserId).First();      
+            
+            DB.Entry(artist).State = EntityState.Modified;
+            artist.Approved = true;
+            DB.SaveChanges();
+
+            return artist;
+        }
+
+        public static bool DeclineArtist(this MySpaceDBEntities DB, ArtistRequest request)
+        {
+            Artist artist = DB.Artists.Where(a => a.UserId == request.UserId).First();
+
+            try
+            {
+                DB.Artists.Remove(artist);
+                DB.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static IEnumerable<Artist> List_UnacceptedArtist(this MySpaceDBEntities DB)
+        {
+            // get list of Artists that aren't accepted nor blocked yet
+            return DB.Artists
+                .Join( // join Users
+                    DB.Users,
+                    s => s.UserId,
+                    u => u.Id,
+                    (s, u) => new { artist = s, user = u }) // create an object containing Artist and User
+                .Where(a => !a.artist.Approved && !a.user.Blocked)
+                .Select(i => i.artist); // re-convert to Artist
+        }
+
         public static bool Remove_FiendShipRequest(this MySpaceDBEntities DB, int userId, int targetUserId)
         {
             User user = DB.Users.Find(userId);

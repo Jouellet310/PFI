@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\FriendShipsController.cs" />
     <Compile Include="Controllers\Gmail.cs" />
@@ -136,8 +137,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Artist.cs">
+      <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArtistRequest.cs" />
     <Compile Include="Models\DBDAL.cs" />
     <Compile Include="Models\EmailView.cs" />
+    <Compile Include="Models\FanLike.cs">
+      <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FriendShip.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
@@ -151,6 +159,9 @@
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginCredential.cs" />
+    <Compile Include="Models\Message.cs">
+      <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MySpaceDBEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -178,10 +189,14 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserSubscriptionWrapper.cs" />
     <Compile Include="Models\UserType.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserView.cs" />
+    <Compile Include="Models\Video.cs">
+      <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +310,7 @@
     <Content Include="Views\Application\Index.cshtml" />
     <Content Include="Views\FriendShips\GetFriendShipsStatus.cshtml" />
     <Content Include="Views\FriendShips\Index.cshtml" />
+    <Content Include="Views\Admin\ManageArtistRequests.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
