@@ -134,6 +134,7 @@
     <Compile Include="Controllers\FriendShipsController.cs" />
     <Compile Include="Controllers\Gmail.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MyspaceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -311,6 +312,11 @@
     <Content Include="Views\FriendShips\GetFriendShipsStatus.cshtml" />
     <Content Include="Views\FriendShips\Index.cshtml" />
     <Content Include="Views\Admin\ManageArtistRequests.cshtml" />
+    <Content Include="Views\Admin\ListArtists.cshtml" />
+    <Content Include="Views\Myspace\ArtistDetails.cshtml" />
+    <Content Include="Views\Myspace\GetArtistDetails.cshtml" />
+    <Content Include="Views\Myspace\GetArtists.cshtml" />
+    <Content Include="Views\Myspace\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
