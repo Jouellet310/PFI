@@ -1,0 +1,12 @@
+﻿@{ ViewBag.Title = "Index"; }
+<h2>Liste des artistes</h2>
+<div id="ArtistListContainer"> <!-- Periodically refreshed --> </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/partialRefresh")
+    <script defer>
+	let partialRefresh =
+		new PartialRefresh("@Url.Action("GetArtists", new { forceRefresh = true })", "ArtistListContainer", 5, PostRefreshTasks);
+    function PostRefreshTasks() { }
+    </script>
+}

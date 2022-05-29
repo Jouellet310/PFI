@@ -1,0 +1,53 @@
+﻿@model MySpace.Models.Artist
+@{
+    ViewBag.Title = "ArtistDetails";
+	int userId = Model.UserId;
+}
+
+<div id="ArtistDetailsContainer"> <!-- Periodically refreshed --> </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/partialRefresh")
+    <script defer>
+	let partialRefresh =
+        new PartialRefresh("@Url.Action("GetArtistDetails", new { artistId = (int)Model.Id, forceRefresh = true })", "ArtistDetailsContainer", 3, PostRefreshTasks);
+    function PostRefreshTasks() {
+		$("#newMessageForm").hide();
+		$("#commandSection").show();
+        $().click(function () {
+            $().show();
+			$("#commandSection").hide();
+			$("#ArtistMessageContainer").scrollTop(0);
+			partialRefresh.pause();
+		});
+		$("#AddMessage").click(function () {
+			let text = $("#editMessage").val();
+			let url =
+				@Url.Action("/") + "AddMessage?artistId=" + "@((int)Model.Id)" + "&text=" + text;
+		partialRefresh.command(url);
+		partialRefresh.restart();
+		$("#newMessageForm").hide();
+		$("#commandSection").show();
+		})
+		$("#cancelMessage").click(function () {
+			partialRefresh.restart();
+			$("#newMessageForm").hide();
+			$("#commandSection").show();
+		})
+		$("#FollowArtist").click(function () {
+			let url =
+				@Url.Action("/") + "AddLike?artistId=" + "@((int)Model.Id)";
+			partialRefresh.command(url);
+            partialRefresh.restart();
+		})
+		$("#UnfollowArtist").click(function () {
+			let url =
+				@Url.Action("/") + "RemoveLike?artistId=" + "@((int)Model.Id)";
+			partialRefresh.command(url);
+            partialRefresh.restart();
+		});
+
+    }
+    </script>
+}
+
