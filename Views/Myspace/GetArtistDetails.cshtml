@@ -1,0 +1,102 @@
+﻿@model MySpace.Models.Artist
+@{
+    MySpace.Models.User currentUser = MySpace.Models.OnlineUsers.GetSessionUser();
+    DateTime currentUserMessageCreationDate = DateTime.Now;
+    var artistImageUrl = "~/ImagesData/ArtistImage/" + Model.MainPhotoGUID + ".Jpeg";
+    var fanLikes = Model.FanLikes;
+    int fanCount = fanLikes.Count;
+    bool userIsFollowing = false;
+    foreach(var like in fanLikes)
+    {
+        if(like.User == currentUser && like.Artist == Model)
+        {
+            userIsFollowing = true;
+        }
+    }
+    string followButtonColor = userIsFollowing ? "red" : "black";
+
+}
+<div>
+    <h2>@Model.Name</h2>
+    <div style="display:grid; grid-template-columns:30px 30px 30px">
+        @Helper.GlyphiconAction("Index", "glyphicon-circle-arrow-left", "Retour à la liste")
+        <span></span> <span></span>  
+    </div>
+</div>
+<hr />
+<div class="PhotoDetailsLayout">
+    <div>
+
+        <img src="@artistImageUrl"/>
+
+        <span style="margin-top:8px; width:700px; text-align:justify">
+            @Model.Description
+            <br /> <br />
+        </span>
+
+        <div id="VideosContainer" class="VideosContainer">
+            @foreach(var video in Model.Videos)
+            {
+                Helper.YoutubeThumbnail(video);
+            }
+        </div>
+    </div>
+    <fieldset style="min-width: 320px;">
+        <legend>
+            Messages
+        </legend>
+        <div id="commandSection" style="display:grid; grid-template-columns: 60px 30px 30px 30px">
+            <span id="AddMessages" class="glyphicon glyphiconStyle glyphicon-edit pointer" title="Envoyer un message à l'artiste...'" style="color: #337ab7"></span>
+            @if (userIsFollowing)
+            {
+                <span id="UnfollowArtist" class="glyphicon glyphiconStyle glyphicon-heart" title="Suivre cet artiste...'" style="color: @followButtonColor"></span>
+            }
+            else
+            {
+                <span id="FollowArtist" class="glyphicon glyphiconStyle glyphicon-heart" title="Suivre cet artiste...'" style="color: @followButtonColor"></span>
+            }
+
+        </div>
+        <div id="ArtistMessageContainer" class="PhotoRatingsContainer">
+            <div id="newMessageForm">
+                <hr />
+                <div style="height: 25px; display:grid; grid-template-columns: 110px 26px 26px">
+                    <div id="AddMessage" class="glyphicon glyphicon-green glyphiconStyle glyphicon-ok pointer"
+                         title="Envoyer le message" style=""></div>
+                    <div id="cancelMessage" class="glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer"
+                         title="Annuler la Modification de votre évaluation" style=""></div>
+                </div>
+                <textarea id="editMessage" style="width:100%"></textarea>
+            </div>
+            @{
+                IEnumerable<MySpace.Models.Message> messages = Model.Messages.OrderBy(m => m.Creation);
+
+                foreach (var message in messages)
+                {
+                    if (!message.User.Blocked)
+                    {
+                        <hr />
+                        <div style="height: 40px; display:grid; grid-template-columns: 180px auto">
+                            <div>
+                                @Helper.AvatarUser(message.User)
+                            </div>
+                            <div>
+                                @Helper.When(message.Creation)
+                            </div>
+                            @if (message.User == currentUser) {
+                                <div>
+                                    <div id="removeMesssage" class="glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer"
+                                         title="Supprimer le message" style=""></div>
+                                </div>
+                            }
+                        </div>
+                        <div>
+                            @message.Text
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </fieldset>
+</div>
+

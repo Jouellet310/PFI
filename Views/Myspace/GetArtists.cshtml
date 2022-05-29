@@ -1,0 +1,7 @@
+﻿@model IEnumerable<MySpace.Models.Artist>
+@foreach(var artist in Model)
+ { 
+    <div>
+        @Helper.ArtistPhotoLink(artist)
+    </div>  
+ }
