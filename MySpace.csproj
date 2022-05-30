@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -46,10 +47,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -131,6 +132,7 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\FriendShipsController.cs" />
     <Compile Include="Controllers\Gmail.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -142,6 +144,7 @@
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ArtistRequest.cs" />
+    <Compile Include="Models\ArtistView.cs" />
     <Compile Include="Models\DBDAL.cs" />
     <Compile Include="Models\EmailView.cs" />
     <Compile Include="Models\FanLike.cs">
@@ -223,10 +226,14 @@
     <Content Include="Content\UI-icons\timeout.png" />
     <Content Include="Content\UI-icons\UnBlocked.png" />
     <Content Include="Content\UI-icons\user.png" />
+    <Content Include="DatabaseUpgrade_Users.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="ImagesData\ArtistImage\0e91d0c8-febb-4b42-ac49-7615fcf00d37.Jpeg" />
+    <Content Include="ImagesData\ArtistImage\0e99d0c8-febb-8g59-ac49-5849fcf00d36.Jpeg" />
+    <Content Include="ImagesData\ArtistImage\default.jpg" />
     <Content Include="ImagesData\Avatars\0e99d0c8-febb-4b40-ac49-7615fcf00d36.Jpeg" />
     <Content Include="ImagesData\Avatars\292bd2d9-4232-4568-820f-62ae8d857c80.Jpeg" />
     <Content Include="ImagesData\Avatars\f201b2e7-e332-4e65-988d-6456d3307201.Jpeg" />
@@ -317,6 +324,7 @@
     <Content Include="Views\Myspace\GetArtistDetails.cshtml" />
     <Content Include="Views\Myspace\GetArtists.cshtml" />
     <Content Include="Views\Myspace\Index.cshtml" />
+    <Content Include="Views\Artist\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -368,7 +376,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

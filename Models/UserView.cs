@@ -51,6 +51,12 @@ namespace MySpace.Models
         {
             get { return UserTypeId == 1 /*Admin*/; }
         }
+
+        public bool IsArtist
+        {
+            get { return UserTypeId == 4; }
+        }
+
         public string GetFullName(bool showGender = false)
         {
             if (showGender)
