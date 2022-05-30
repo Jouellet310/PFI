@@ -4,17 +4,17 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="MySpaceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
+    <Schema Namespace="MySpaceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Artists">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="UserId" Nullable="false" Type="int" />
-          <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="MainPhotoGUID" MaxLength="100" Type="nvarchar" />
-          <Property Name="Description" MaxLength="50" Type="nvarchar" />
-          <Property Name="Approved" Nullable="false" Type="bit" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MainPhotoGUID" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
           <Property Name="Visits" Type="int" />
           <Property Name="Likes" Type="int" />
         </EntityType>
@@ -22,100 +22,101 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="ArtistId" Nullable="false" Type="int" />
-          <Property Name="UserId" Nullable="false" Type="int" />
-          <Property Name="Creation" Nullable="false" Type="datetime" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Creation" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="FriendShips">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="UserId" Nullable="false" Type="int" />
-          <Property Name="TargetUserId" Nullable="false" Type="int" />
-          <Property Name="CreationDate" Nullable="false" Type="datetime" />
-          <Property Name="Accepted" Nullable="false" Type="bit" />
-          <Property Name="Declined" Nullable="false" Type="bit" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TargetUserId" Type="int" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="Accepted" Type="bit" Nullable="false" />
+          <Property Name="Declined" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Genders">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Logins">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="UserId" Nullable="false" Type="int" />
-          <Property Name="LoginDate" Nullable="false" Type="datetime" />
-          <Property Name="LogoutDate" Nullable="false" Type="datetime" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="LoginDate" Type="datetime" Nullable="false" />
+          <Property Name="LogoutDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Messages">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="ArtistId" Nullable="false" Type="int" />
-          <Property Name="UserId" Nullable="false" Type="int" />
-          <Property Name="Text" MaxLength="50" Type="nvarchar" />
-          <Property Name="Creation" Nullable="false" Type="datetime" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="50" />
+          <Property Name="Creation" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ResetPasswordCommands">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="UserId" Nullable="false" Type="int" />
-          <Property Name="VerificationCode" Nullable="false" Type="int" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="VerificationCode" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UnverifiedEmails">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="UserId" Nullable="false" Type="int" />
-          <Property Name="Email" Nullable="false" Type="nvarchar(max)" />
-          <Property Name="VerificationCode" Nullable="false" Type="int" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="VerificationCode" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="UserTypeId" Nullable="false" Type="int" />
-          <Property Name="FirstName" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="LastName" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="Email" Nullable="false" Type="nvarchar(max)" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserTypeId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Avatar" Type="nvarchar(max)" />
-          <Property Name="GenderId" Nullable="false" Type="int" />
-          <Property Name="Password" Nullable="false" MaxLength="50" Type="nvarchar" />
-          <Property Name="CreationDate" Nullable="false" Type="datetime" />
-          <Property Name="Verified" Nullable="false" Type="bit" />
-          <Property Name="Blocked" Nullable="false" Type="bit" />
+          <Property Name="GenderId" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="Verified" Type="bit" Nullable="false" />
+          <Property Name="Blocked" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UserTypes">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Videos">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="ArtistId" Nullable="false" Type="int" />
-          <Property Name="YoutubeLink" Nullable="false" MaxLength="100" Type="nvarchar" />
-          <Property Name="Creation" Nullable="false" Type="datetime" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="25" />
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+          <Property Name="YoutubeLink" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Creation" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Logins__UserId__38996AB5">
-          <End Type="Self.Users" Multiplicity="1" Role="Users" />
-          <End Type="Self.Logins" Multiplicity="*" Role="Logins" />
+        <Association Name="FK__Logins__UserId__68487DD7">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
@@ -125,9 +126,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__GenderId__34C8D9D1">
-          <End Type="Self.Genders" Multiplicity="1" Role="Genders" />
-          <End Type="Self.Users" Multiplicity="*" Role="Users" />
+        <Association Name="FK__Users__GenderId__6477ECF3">
+          <End Role="Genders" Type="Self.Genders" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Genders">
               <PropertyRef Name="Id" />
@@ -137,9 +138,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__UserTypeI__35BCFE0A">
-          <End Type="Self.UserTypes" Multiplicity="1" Role="UserTypes" />
-          <End Type="Self.Users" Multiplicity="*" Role="Users" />
+        <Association Name="FK__Users__UserTypeI__656C112C">
+          <End Role="UserTypes" Type="Self.UserTypes" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserTypes">
               <PropertyRef Name="Id" />
@@ -150,8 +151,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_artists_users">
-          <End Type="Self.Users" Multiplicity="1" Role="Users" />
-          <End Type="Self.Artists" Multiplicity="*" Role="Artists" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
@@ -162,8 +163,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_fanlikes_artists">
-          <End Type="Self.Artists" Multiplicity="1" Role="Artists" />
-          <End Type="Self.FanLikes" Multiplicity="*" Role="FanLikes" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="FanLikes" Type="Self.FanLikes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artists">
               <PropertyRef Name="Id" />
@@ -174,8 +175,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_fanlikes_users">
-          <End Type="Self.Users" Multiplicity="1" Role="Users" />
-          <End Type="Self.FanLikes" Multiplicity="*" Role="FanLikes" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FanLikes" Type="Self.FanLikes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
@@ -186,8 +187,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_messages_artists">
-          <End Type="Self.Artists" Multiplicity="1" Role="Artists" />
-          <End Type="Self.Messages" Multiplicity="*" Role="Messages" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artists">
               <PropertyRef Name="Id" />
@@ -198,8 +199,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_messages_users">
-          <End Type="Self.Users" Multiplicity="1" Role="Users" />
-          <End Type="Self.Messages" Multiplicity="*" Role="Messages" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
@@ -210,8 +211,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_videos_artists">
-          <End Type="Self.Artists" Multiplicity="1" Role="Artists" />
-          <End Type="Self.Videos" Multiplicity="*" Role="Videos" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="Videos" Type="Self.Videos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artists">
               <PropertyRef Name="Id" />
@@ -233,41 +234,41 @@
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Videos" EntityType="Self.Videos" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Logins__UserId__38996AB5" Association="Self.FK__Logins__UserId__38996AB5">
-            <End EntitySet="Users" Role="Users" />
-            <End EntitySet="Logins" Role="Logins" />
+          <AssociationSet Name="FK__Logins__UserId__68487DD7" Association="Self.FK__Logins__UserId__68487DD7">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logins" EntitySet="Logins" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__GenderId__34C8D9D1" Association="Self.FK__Users__GenderId__34C8D9D1">
-            <End EntitySet="Genders" Role="Genders" />
-            <End EntitySet="Users" Role="Users" />
+          <AssociationSet Name="FK__Users__GenderId__6477ECF3" Association="Self.FK__Users__GenderId__6477ECF3">
+            <End Role="Genders" EntitySet="Genders" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__UserTypeI__35BCFE0A" Association="Self.FK__Users__UserTypeI__35BCFE0A">
-            <End EntitySet="UserTypes" Role="UserTypes" />
-            <End EntitySet="Users" Role="Users" />
+          <AssociationSet Name="FK__Users__UserTypeI__656C112C" Association="Self.FK__Users__UserTypeI__656C112C">
+            <End Role="UserTypes" EntitySet="UserTypes" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="fk_artists_users" Association="Self.fk_artists_users">
-            <End EntitySet="Users" Role="Users" />
-            <End EntitySet="Artists" Role="Artists" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Artists" EntitySet="Artists" />
           </AssociationSet>
           <AssociationSet Name="fk_fanlikes_artists" Association="Self.fk_fanlikes_artists">
-            <End EntitySet="Artists" Role="Artists" />
-            <End EntitySet="FanLikes" Role="FanLikes" />
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="FanLikes" EntitySet="FanLikes" />
           </AssociationSet>
           <AssociationSet Name="fk_fanlikes_users" Association="Self.fk_fanlikes_users">
-            <End EntitySet="Users" Role="Users" />
-            <End EntitySet="FanLikes" Role="FanLikes" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FanLikes" EntitySet="FanLikes" />
           </AssociationSet>
           <AssociationSet Name="fk_messages_artists" Association="Self.fk_messages_artists">
-            <End EntitySet="Artists" Role="Artists" />
-            <End EntitySet="Messages" Role="Messages" />
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="fk_messages_users" Association="Self.fk_messages_users">
-            <End EntitySet="Users" Role="Users" />
-            <End EntitySet="Messages" Role="Messages" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="fk_videos_artists" Association="Self.fk_videos_artists">
-            <End EntitySet="Artists" Role="Artists" />
-            <End EntitySet="Videos" Role="Videos" />
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="Videos" EntitySet="Videos" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -426,6 +427,7 @@
           <Property Name="YoutubeLink" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Creation" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Artist" Relationship="MySpaceDBModel.fk_videos_artists" FromRole="Video" ToRole="Artist" />
+          <Property Name="Title" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="fk_fanlikes_artists">
           <End Type="MySpaceDBModel.Artist" Role="Artist" Multiplicity="1" />
@@ -658,6 +660,7 @@
           <EntitySetMapping Name="Videos">
             <EntityTypeMapping TypeName="MySpaceDBModel.Video">
               <MappingFragment StoreEntitySet="Videos">
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Creation" ColumnName="Creation" />
                 <ScalarProperty Name="YoutubeLink" ColumnName="YoutubeLink" />
                 <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />

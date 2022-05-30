@@ -183,6 +183,7 @@
     </Compile>
     <Compile Include="Models\OnlineUsers.cs" />
     <Compile Include="Models\PasswordView.cs" />
+    <Compile Include="Models\PersistActionFilter.cs" />
     <Compile Include="Models\ResetPasswordCommand.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
@@ -325,6 +326,8 @@
     <Content Include="Views\Myspace\GetArtists.cshtml" />
     <Content Include="Views\Myspace\Index.cshtml" />
     <Content Include="Views\Artist\EditProfile.cshtml" />
+    <Content Include="Views\Artist\Videos.cshtml" />
+    <Content Include="Views\Artist\AddVideo.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

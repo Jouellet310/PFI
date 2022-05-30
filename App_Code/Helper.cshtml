@@ -260,9 +260,10 @@
 
 @helper YoutubeThumbnail(MySpace.Models.Video video)
 {
-    string youtubeLink = video.YoutubeLink;
-    string youtubeThumbnail = youtubeLink + "/0.jpg";
+    string youtubeLink = "https://www.youtube.com/watch?v=" + video.YoutubeLink;
+    string youtubeThumbnail = "https://img.youtube.com/vi/" + video.YoutubeLink + "/0.jpg";
     <a href="@youtubeLink" target="_blank">
+        <h5 style="width: 260px;" class="ellipsis">@video.Title</h5>
         <img class="youtubeThumbnail" src="@youtubeThumbnail" alt="" />
     </a>
 }
