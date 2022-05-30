@@ -38,13 +38,12 @@
             <br /> <br />
         </div>
 
-        <div id="VideosContainer" class="VideosContainer">
-            @foreach (var video in Model.Videos)
+            @foreach(var video in Model.Videos)
             {
-
-                @Helper.YoutubeThumbnail(video);
+                <div id="VideosContainer" class="VideosContainer">
+                    @Helper.YoutubeThumbnail(video);
+                </div>
             }
-        </div>
     </div>
     <fieldset style="min-width: 320px;">
         <legend>
