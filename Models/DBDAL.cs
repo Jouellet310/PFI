@@ -526,8 +526,6 @@ namespace MySpace.Models
         public static bool CompileArtistLikes(this MySpaceDBEntities DB, int artistId)
         {
             var artist = DB.Artists.Find(artistId);
-            artist.User.ConfirmEmail = "True";
-            artist.User.ConfirmPassword = "True";
             int likeCount = 0;
             foreach (FanLike like in artist.FanLikes)
             {

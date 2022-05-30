@@ -34,18 +34,6 @@
 			$("#newMessageForm").hide();
 			$("#commandSection").show();
 		})
-		$("#FollowArtist").click(function () {
-			let url =
-				@Url.Action("/") + "AddLike?artistId=" + "@((int)Model.Id)";
-			partialRefresh.command(url);
-            partialRefresh.restart();
-		})
-		$("#UnfollowArtist").click(function () {
-			let url =
-				@Url.Action("/") + "RemoveLike?artistId=" + "@((int)Model.Id)";
-			partialRefresh.command(url);
-            partialRefresh.restart();
-		});
 
     }
 </script>
