@@ -17,10 +17,15 @@
 
 }
 <div>
-    <h2>@Model.Name</h2>
+
     <div style="display:grid; grid-template-columns:30px 30px 30px">
         @Helper.GlyphiconAction("Index", "glyphicon-circle-arrow-left", "Retour à la liste")
-        <span></span> <span></span>  
+        <h2>@Model.Name</h2>
+        <span></span><span></span>
+    </div>
+    <div>
+        <span>Abonnées : @Model.Likes</span>
+        <span>Visites : @Model.Visits</span>
     </div>
 </div>
 <hr />
@@ -29,10 +34,10 @@
 
         <img src="@artistImageUrl"/>
 
-        <span style="margin-top:8px; width:700px; text-align:justify">
+        <div style="margin-top:8px; width:700px; text-align:justify">
             @Model.Description
             <br /> <br />
-        </span>
+        </div>
 
         <div id="VideosContainer" class="VideosContainer">
             @foreach(var video in Model.Videos)
@@ -45,15 +50,15 @@
         <legend>
             Messages
         </legend>
-        <div id="commandSection" style="display:grid; grid-template-columns: 60px 30px 30px 30px">
-            <span id="AddMessages" class="glyphicon glyphiconStyle glyphicon-edit pointer" title="Envoyer un message à l'artiste...'" style="color: #337ab7"></span>
+        <div id="commandSection" style="display:grid; grid-template-columns:30px 30px">
+            <span id="NewMessage" class="glyphicon glyphiconStyle glyphicon-edit pointer" title="Envoyer un message à l'artiste...'" style="color: #337ab7"></span>
             @if (userIsFollowing)
             {
-                <span id="UnfollowArtist" class="glyphicon glyphiconStyle glyphicon-heart" title="Suivre cet artiste...'" style="color: @followButtonColor"></span>
+                <span id="UnfollowArtist" class="glyphicon glyphiconStyle glyphicon-heart pointer" title="Suivre cet artiste...'" style="color: @followButtonColor"></span>
             }
             else
             {
-                <span id="FollowArtist" class="glyphicon glyphiconStyle glyphicon-heart" title="Suivre cet artiste...'" style="color: @followButtonColor"></span>
+                <span id="FollowArtist" class="glyphicon glyphiconStyle glyphicon-heart pointer" title="Suivre cet artiste...'" style="color: @followButtonColor"></span>
             }
 
         </div>
@@ -76,19 +81,13 @@
                     if (!message.User.Blocked)
                     {
                         <hr />
-                        <div style="height: 40px; display:grid; grid-template-columns: 180px auto">
+                        <div style="height: 40px; display:grid; grid-template-columns: 180px auto auto">
                             <div>
                                 @Helper.AvatarUser(message.User)
                             </div>
                             <div>
                                 @Helper.When(message.Creation)
                             </div>
-                            @if (message.User == currentUser) {
-                                <div>
-                                    <div id="removeMesssage" class="glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer"
-                                         title="Supprimer le message" style=""></div>
-                                </div>
-                            }
                         </div>
                         <div>
                             @message.Text

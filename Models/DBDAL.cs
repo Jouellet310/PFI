@@ -470,7 +470,7 @@ namespace MySpace.Models
                     Artist = artist
                 };
                 DB.FanLikes.Add(newFanLike);
-                DB.CompileArtistLikes(artist);
+                DB.CompileArtistLikes(artistId);
                 DB.SaveChanges();
                 return true;
             }
@@ -482,7 +482,7 @@ namespace MySpace.Models
             Artist artist = DB.Artists.Find(artistId);
             var likeToRemove = DB.FanLikes.Where(f => f.UserId == OnlineUsers.CurrentUserId && f.ArtistId == artistId).FirstOrDefault();
             DB.FanLikes.Remove(likeToRemove);
-            DB.CompileArtistLikes(artist);
+            DB.CompileArtistLikes(artistId);
             DB.SaveChanges();
             return true;
         }
@@ -510,13 +510,14 @@ namespace MySpace.Models
             return true;
         }
 
-        public static bool CompileArtistLikes(this MySpaceDBEntities DB, Artist artist)
+        public static bool CompileArtistLikes(this MySpaceDBEntities DB, int artistId)
         {
+            var artist = DB.Artists.Find(artistId);
             int likeCount = 0;
             foreach (FanLike like in artist.FanLikes)
             {
                 //if (!photoRating.User.Blocked)
-                if (!DB.Users.Where(user => user.Id == like.UserId).First().Blocked)
+                if (!DB.Users.Where(user => user.Id == like.UserId).FirstOrDefault().Blocked)
                 {
                     likeCount++;
                 }

@@ -270,11 +270,11 @@
 
 @helper ArtistPhotoLink(MySpace.Models.Artist artist)
 {
-var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-var imageUrl = Url.Content("~/ImagesData/ArtistImage/" + artist.MainPhotoGUID + ".Jpeg");
-var linkUrl = Url.Action("ArtistDetails", "Myspace", new { artistId = (int)artist.Id });
+    var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var imageUrl = Url.Content("~/ImagesData/ArtistImage/" + artist.MainPhotoGUID + ".Jpeg");
+    var linkUrl = Url.Action("ArtistDetails", "Myspace", new { artistId = (int)artist.Id });
     <div style="justify-content: center">
-        <a href="@linkUrl" data-toogle="tooltip" title="Modifier le profil">
+        <a href="@linkUrl" data-toogle="tooltip" title="Visiter la page de @artist.Name...">
             <img src="@imageUrl" class="avatar" />
         </a>
         <h4>@artist.Name</h4>
@@ -287,7 +287,7 @@ var linkUrl = Url.Action("ArtistDetails", "Myspace", new { artistId = (int)artis
     var imageUrl = Url.Content("~/ImagesData/ArtistImage/" + artist.MainPhotoGUID);
     <div>
         <a href="@imageUrl" target="_blank">
-          <img src="@imageUrl" class="mediumAvatar" />
+            <img src="@imageUrl" class="mediumAvatar" />
         </a>
     </div>
 }
