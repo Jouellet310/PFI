@@ -6,9 +6,9 @@
     var fanLikes = Model.FanLikes;
     int fanCount = fanLikes.Count;
     bool userIsFollowing = false;
-    foreach(var like in fanLikes)
+    foreach (var like in fanLikes)
     {
-        if(like.User == currentUser && like.Artist == Model)
+        if (like.User == currentUser && like.Artist == Model)
         {
             userIsFollowing = true;
         }
@@ -31,7 +31,7 @@
 <div class="PhotoDetailsLayout">
     <div>
 
-        <img src="@artistImageUrl" class="artistImage"/>
+        <img src="@artistImageUrl" class="artistImage" />
 
         <div style="margin-top:8px; width:700px; text-align:justify">
             @Model.Description
@@ -39,9 +39,10 @@
         </div>
 
         <div id="VideosContainer" class="VideosContainer">
-            @foreach(var video in Model.Videos)
+            @foreach (var video in Model.Videos)
             {
-                Helper.YoutubeThumbnail(video);
+
+                @Helper.YoutubeThumbnail(video);
             }
         </div>
     </div>
@@ -67,47 +68,57 @@
         {
             <div></div>
         }
-    <div id="ArtistMessageContainer" class="PhotoRatingsContainer">
-        @if (MySpace.Models.OnlineUsers.CurrentUserId != Model.UserId)
-        {
-            <div id="newMessageForm">
-                <hr />
-                <div style="height: 25px; display:grid; grid-template-columns: 110px 26px 26px">
-                    <div id="AddMessage" class="glyphicon glyphicon-green glyphiconStyle glyphicon-ok pointer"
-                         title="Envoyer le message" style=""></div>
-                    <div id="cancelMessage" class="glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer"
-                         title="Annuler la Modification de votre évaluation" style=""></div>
+        <div id="ArtistMessageContainer" class="PhotoRatingsContainer">
+            @if (MySpace.Models.OnlineUsers.CurrentUserId != Model.UserId)
+            {
+                <div id="newMessageForm">
+                    <hr />
+                    <div style="height: 25px; display:grid; grid-template-columns: 110px 26px 26px">
+                        <div id="AddMessage" class="glyphicon glyphicon-green glyphiconStyle glyphicon-ok pointer"
+                             title="Envoyer le message" style=""></div>
+                        <div id="cancelMessage" class="glyphicon glyphicon-red glyphiconStyle glyphicon-remove pointer"
+                             title="Annuler la Modification de votre évaluation" style=""></div>
+                    </div>
+                    <textarea id="editMessage" style="width:100%"></textarea>
                 </div>
-                <textarea id="editMessage" style="width:100%"></textarea>
-            </div>
-        }
+            }
             else
             {
                 <div></div>
             }
-        @{
-            IEnumerable<MySpace.Models.Message> messages = Model.Messages.OrderByDescending(m => m.Creation);
+            @{
+                IEnumerable<MySpace.Models.Message> messages = Model.Messages.OrderByDescending(m => m.Creation);
 
-            foreach (var message in messages)
-            {
-                if (!message.User.Blocked)
+                foreach (var message in messages)
                 {
-                    <hr />
-                    <div style="height: 40px; display:grid; grid-template-columns: 180px auto auto">
-                        <div>
-                            @Helper.AvatarUser(message.User)
+                    if (!message.User.Blocked)
+                    {
+                        <hr />
+                        <div style="height: 40px; display:grid; grid-template-columns: 180px auto ">
+                            <div>
+                                @Helper.AvatarUser(message.User)
+                            </div>
+                            <div>
+                                @Helper.When(message.Creation)
+                            </div>
                         </div>
                         <div>
-                            @Helper.When(message.Creation)
+                            @message.Text
                         </div>
-                    </div>
-                    <div>
-                        @message.Text
-                    </div>
+                        if (message.User == currentUser || currentUser.Id == Model.User.Id)
+                        {
+                            <div>
+                                @Helper.GlyphiconConfirmCommand("RemoveMessage" + "?messageId=" + message.Id, "partialRefresh.command", "glyphicon-red glyphicon-remove", "Supprimer ce message")
+                            </div>
+                        }
+                        else
+                        {
+                            <div></div>
+                        }
+                    }
                 }
             }
-        }
-    </div>
+        </div>
     </fieldset>
 </div>
 

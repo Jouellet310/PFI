@@ -532,7 +532,7 @@ namespace MySpace.Models
             int likeCount = 0;
             foreach (FanLike like in artist.FanLikes)
             {
-                //if (!photoRating.User.Blocked)
+                //if (!FanLike.User.Blocked)
                 if (!DB.Users.Where(user => user.Id == like.UserId).FirstOrDefault().Blocked)
                 {
                     likeCount++;
