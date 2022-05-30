@@ -8,14 +8,14 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/partialRefresh")
-    <script defer>
+<script defer>
 	let partialRefresh =
-        new PartialRefresh("@Url.Action("GetArtistDetails", new { artistId = (int)Model.Id, forceRefresh = true })", "ArtistDetailsContainer", 3, PostRefreshTasks);
+        new PartialRefresh("@Url.Action("GetArtistDetails", new { artistId = (int)Model.Id, forceRefresh = true })", "ArtistDetailsContainer", 5, PostRefreshTasks);
     function PostRefreshTasks() {
 		$("#newMessageForm").hide();
 		$("#commandSection").show();
-        $().click(function () {
-            $().show();
+		$('#NewMessage').click(function () {
+            $('#newMessageForm').show();
 			$("#commandSection").hide();
 			$("#ArtistMessageContainer").scrollTop(0);
 			partialRefresh.pause();
@@ -48,6 +48,6 @@
 		});
 
     }
-    </script>
+</script>
 }
 
