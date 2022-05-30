@@ -546,6 +546,10 @@ namespace MySpace.Models
             {
                 artist.Likes = 0;
             }
+
+            artist.User.ConfirmEmail = "random";
+            artist.User.ConfirmPassword = "random";
+
             DB.Entry(artist).State = EntityState.Modified;
             DB.SaveChanges();
             return true;
