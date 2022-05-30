@@ -267,4 +267,53 @@ namespace MySpace.Models
             return base.AuthorizeCore(httpContext);
         }
     }
+
+    public class ArtistAccess : AuthorizeAttribute
+    {
+        // Create a class to wrap duplicate code
+        // TODO create abstract class SessionUserAccess
+        // TODO inherit SessionUserAccess to create individual SessionUser permission
+        /* 
+         * class AdminAccess : SessionUserAccess
+         * {
+         *      public Func<User, bool> sessionUserAuthorize; // no need to declare, defined in SessionUserAccess
+         *      
+         *      public AdminAccess () 
+         *      {
+         *          sessionUserAuthorize = (User user) => user.IsAdmin; // set User permission mapping in Func
+         *      }
+         *      
+         *      // SessionUserAccess calls the Func to authorize the SessionUser
+         * }
+        */
+
+        private bool RefreshTimeOut { get; set; }
+
+        public ArtistAccess(bool refreshTimeOut = true)
+        {
+            RefreshTimeOut = refreshTimeOut;
+        }
+
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+             
+
+            User sessionUser = OnlineUsers.GetSessionUser();
+            if (sessionUser != null && sessionUser.IsArtist)
+            {
+                if (OnlineUsers.SessionExpired(sessionUser.Id, RefreshTimeOut))
+                {
+                    OnlineUsers.RemoveSessionUser();
+                    httpContext.Response.Redirect("~/Accounts/Login?message=Session expirée!");
+                }
+                return true;
+            }
+            else
+            {
+                OnlineUsers.RemoveSessionUser();
+                httpContext.Response.Redirect("~/Accounts/Login?message=Acces illegal!");
+            }
+            return base.AuthorizeCore(httpContext);
+        }
+    }
 }

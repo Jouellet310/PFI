@@ -18,6 +18,11 @@ namespace MySpace.Controllers
             return View(DB.List_UnacceptedArtist());
         }
 
+        public ActionResult ListArtists ()
+        {
+            return View(DB.List_Artists());
+        }
+
         public ActionResult AcceptArtist (ArtistRequest request)
         {
             if (ModelState.IsValid)

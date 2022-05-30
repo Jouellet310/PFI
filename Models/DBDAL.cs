@@ -299,10 +299,12 @@ namespace MySpace.Models
             }
         }
 
+        public static IEnumerable<Artist> List_Artists(this MySpaceDBEntities DB)
+            => DB.Artists.OrderBy(a => a.Name);
+        
         public static IEnumerable<Artist> List_UnacceptedArtist(this MySpaceDBEntities DB)
-        {
             // get list of Artists that aren't accepted nor blocked yet
-            return DB.Artists
+            => DB.Artists
                 .Join( // join Users
                     DB.Users,
                     s => s.UserId,
@@ -310,7 +312,6 @@ namespace MySpace.Models
                     (s, u) => new { artist = s, user = u }) // create an object containing Artist and User
                 .Where(a => !a.artist.Approved && !a.user.Blocked)
                 .Select(i => i.artist); // re-convert to Artist
-        }
 
         public static bool Remove_FiendShipRequest(this MySpaceDBEntities DB, int userId, int targetUserId)
         {

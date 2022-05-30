@@ -361,11 +361,6 @@ namespace MySpace.Controllers
                         ModelState.AddModelError("Email", "Ce courriel appartient à un artiste qui n'à pas encore été validé.");
                         return View(loginCredential);
                     }
-                    else
-                    {
-                        ModelState.AddModelError("Email", "Ce courriel appartient à un artiste.");
-                        return View(loginCredential);
-                    }
                 }
                 
                 // OnlineUsers.AddSessionUser(user.Id);
