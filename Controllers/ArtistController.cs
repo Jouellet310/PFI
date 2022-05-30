@@ -92,5 +92,27 @@ namespace MySpace.Controllers
             DB.SaveChanges();
             return RedirectToAction("Videos");
         }
+
+        public ActionResult SendMail ()
+        {
+            
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SendMail(string Message)
+        {
+            Artist artiste = DB.Artists.Where(a => a.UserId == OnlineUsers.CurrentUserId).First();
+            var followers = DB.List_Followers(DB.Artists.Where(a => a.UserId == OnlineUsers.CurrentUserId).First().Id)
+                .ToList();
+
+            foreach (User user in followers)
+            {
+                Gmail.SMTP.SendEmail(user.GetFullName(), user.Email, "Message de votre artiste preferer - " + artiste.Name, Message);
+            }
+
+            return RedirectToAction("Index", "MySpace");
+        }
     }
 }

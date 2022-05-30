@@ -510,6 +510,9 @@ namespace MySpace.Models
             return true;
         }
 
+        public static IEnumerable<User> List_Followers (this MySpaceDBEntities DB, int artistId)
+            => DB.Users.Where(u => DB.FanLikes.Where(fl => fl.ArtistId == artistId).Select(s => s.UserId).Contains(u.Id));
+
         public static bool CompileArtistLikes(this MySpaceDBEntities DB, int artistId)
         {
             var artist = DB.Artists.Find(artistId);

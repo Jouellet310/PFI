@@ -328,6 +328,7 @@
     <Content Include="Views\Artist\EditProfile.cshtml" />
     <Content Include="Views\Artist\Videos.cshtml" />
     <Content Include="Views\Artist\AddVideo.cshtml" />
+    <Content Include="Views\Artist\SendMail.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
