@@ -1,0 +1,41 @@
+﻿@model IEnumerable<MySpace.Models.Video>
+
+@{
+    ViewBag.Title = "Videos";
+}
+
+<h2>Liste de video</h2>
+
+<div>
+
+    @if (Model.Count() == 0)
+    {
+        <h4 class="info">Vous n'avez aucune video</h4>
+    }
+    else
+    {
+
+        foreach (var video in Model)
+        {
+            <div class="row">
+
+                <div class="col-md-1">
+                    @video.Title
+                </div>
+                <div class="col-md-10">
+                    @Helper.YoutubeThumbnail(video)
+                </div>
+                <div class="col-md-1">
+                    @Helper.GlyphiconAction(@"RemoveVideo/" + video.Id, "glyphicon-remove", "Retirer la video")
+                </div>
+
+            </div>
+        }
+
+    }
+</div>
+
+<div>
+    <h5>Ajouter une video</h5>
+    @{ Html.RenderPartial("AddVideo", new MySpace.Models.Video()); }
+</div>
