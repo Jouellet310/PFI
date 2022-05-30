@@ -112,6 +112,17 @@ namespace MySpace.Models
 
                 userToDelete.RemoveAvatar();
                 DB.Users.Remove(userToDelete);
+                Artist artistToDelete = DB.Artists.Where(a => a.UserId == userId).FirstOrDefault();
+                if (artistToDelete != null)
+                {
+                    DB.FanLikes.RemoveRange(DB.FanLikes.Where(fl => fl.ArtistId == artistToDelete.Id));
+                    DB.Messages.RemoveRange(DB.Messages.Where(m => m.ArtistId == artistToDelete.Id));
+                    DB.Videos.RemoveRange(DB.Videos.Where(v => v.ArtistId == artistToDelete.Id));
+                    DB.Artists.Remove(artistToDelete);
+                }
+                DB.FanLikes.RemoveRange(DB.FanLikes.Where(fl => fl.UserId == userToDelete.Id));
+                DB.Messages.RemoveRange(DB.Messages.Where(m => m.UserId == userToDelete.Id));
+                DB.SaveChanges();
                 DB.SaveChanges();
 
                 Commit();
@@ -298,6 +309,8 @@ namespace MySpace.Models
                 return false;
             }
         }
+
+
 
         public static IEnumerable<Artist> List_Artists(this MySpaceDBEntities DB)
             => DB.Artists.OrderBy(a => a.Name);

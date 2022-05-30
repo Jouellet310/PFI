@@ -90,6 +90,14 @@ legend {
     float: left;
 }
 
+.artistImage {
+    margin-right: 8px;
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 100px;
+    float: left;
+}
+
 .userContainer {
     display: grid;
     grid-template-columns: 260px 100px 80px 80px 120px 80px 80px 80px;
