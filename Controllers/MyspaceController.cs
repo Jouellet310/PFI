@@ -65,7 +65,9 @@ namespace MySpace.Controllers
             if (artist != null)
             {
                 SetLocalArtistsSerialNumber();
-                DB.AddArtistVisit(artistId);
+                if(OnlineUsers.CurrentUserId != artist.UserId) {
+                    DB.AddArtistVisit(artistId);
+                }
                 return View("ArtistDetails", artist);
             }
             return RedirectToAction("Index");
@@ -80,33 +82,35 @@ namespace MySpace.Controllers
             }
             return null;
         }
-
-        public ActionResult AddLike(int artistId)
+        
+        public void AddLike(int artistId)
         {
             SetLocalArtistsSerialNumber();
             DB.AddLike(artistId);
-            return View();
         }
 
-        public ActionResult RemoveLike(int artistId)
+        public void RemoveLike(int artistId)
         {
             SetLocalArtistsSerialNumber();
             DB.RemoveLike(artistId);
-            return View();
         }
 
-        public ActionResult AddMessage(int artistId,string text)
+        public void AddMessage(int artistId,string message)
         {
             SetLocalArtistsSerialNumber();
-            DB.AddMessage(artistId, text);
-            return View();
+            DB.AddMessage(artistId, message);
         }
 
-        public ActionResult RemoveMessage(int messageId)
+        public void RemoveMessage(int messageId)
         {
             SetLocalArtistsSerialNumber();
             DB.RemoveMessage(messageId);
-            return View();
+        }
+
+        public void DeleteArtist(int id)
+        {
+            SetLocalArtistsSerialNumber();
+            DB.RemoveUser(id);
         }
     }
 }

@@ -32,7 +32,7 @@
 <div class="PhotoDetailsLayout">
     <div>
 
-        <img src="@artistImageUrl"/>
+        <img src="@artistImageUrl" class="artistImage"/>
 
         <div style="margin-top:8px; width:700px; text-align:justify">
             @Model.Description
@@ -50,19 +50,27 @@
         <legend>
             Messages
         </legend>
-        <div id="commandSection" style="display:grid; grid-template-columns:30px 30px">
-            <span id="NewMessage" class="glyphicon glyphiconStyle glyphicon-edit pointer" title="Envoyer un message à l'artiste...'" style="color: #337ab7"></span>
-            @if (userIsFollowing)
-            {
-                <span id="UnfollowArtist" class="glyphicon glyphiconStyle glyphicon-heart pointer" title="Suivre cet artiste...'" style="color: @followButtonColor"></span>
-            }
-            else
-            {
-                <span id="FollowArtist" class="glyphicon glyphiconStyle glyphicon-heart pointer" title="Suivre cet artiste...'" style="color: @followButtonColor"></span>
-            }
-
-        </div>
-        <div id="ArtistMessageContainer" class="PhotoRatingsContainer">
+        @if (MySpace.Models.OnlineUsers.CurrentUserId != Model.UserId)
+        {
+            <div id="commandSection" style="display:grid; grid-template-columns:30px 30px">
+                <span id="NewMessage" class="glyphicon glyphiconStyle glyphicon-edit pointer" title="Envoyer un message à l'artiste...'" style="color: #337ab7"></span>
+                @if (userIsFollowing)
+                {
+                    @Helper.GlyphiconConfirmCommand("RemoveLike" + "?artistId=" + Model.Id, "partialRefresh.command", "glyphicon-red glyphicon-heart", "Se désabonner de " + Model.Name)
+                }
+                else
+                {
+                    @Helper.GlyphiconConfirmCommand("AddLike" + "?artistId=" + Model.Id, "partialRefresh.command", " glyphicon-black glyphicon-heart", "S'abonner à " + Model.Name)
+                }
+            </div>
+        }
+        else
+        {
+            <div></div>
+        }
+    <div id="ArtistMessageContainer" class="PhotoRatingsContainer">
+        @if (MySpace.Models.OnlineUsers.CurrentUserId != Model.UserId)
+        {
             <div id="newMessageForm">
                 <hr />
                 <div style="height: 25px; display:grid; grid-template-columns: 110px 26px 26px">
@@ -73,29 +81,34 @@
                 </div>
                 <textarea id="editMessage" style="width:100%"></textarea>
             </div>
-            @{
-                IEnumerable<MySpace.Models.Message> messages = Model.Messages.OrderBy(m => m.Creation);
+        }
+            else
+            {
+                <div></div>
+            }
+        @{
+            IEnumerable<MySpace.Models.Message> messages = Model.Messages.OrderByDescending(m => m.Creation);
 
-                foreach (var message in messages)
+            foreach (var message in messages)
+            {
+                if (!message.User.Blocked)
                 {
-                    if (!message.User.Blocked)
-                    {
-                        <hr />
-                        <div style="height: 40px; display:grid; grid-template-columns: 180px auto auto">
-                            <div>
-                                @Helper.AvatarUser(message.User)
-                            </div>
-                            <div>
-                                @Helper.When(message.Creation)
-                            </div>
+                    <hr />
+                    <div style="height: 40px; display:grid; grid-template-columns: 180px auto auto">
+                        <div>
+                            @Helper.AvatarUser(message.User)
                         </div>
                         <div>
-                            @message.Text
+                            @Helper.When(message.Creation)
                         </div>
-                    }
+                    </div>
+                    <div>
+                        @message.Text
+                    </div>
                 }
             }
-        </div>
+        }
+    </div>
     </fieldset>
 </div>
 

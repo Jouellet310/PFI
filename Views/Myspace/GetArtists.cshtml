@@ -1,7 +1,15 @@
 ﻿@model IEnumerable<MySpace.Models.Artist>
+@{ 
+    var currentUser = MySpace.Models.OnlineUsers.GetSessionUser();
+}
 @foreach(var artist in Model)
  { 
-    <div>
+    <div style="display:grid; grid-template-columns: auto auto">
         @Helper.ArtistPhotoLink(artist)
+        @if (currentUser.IsAdmin)
+        {
+            @Helper.GlyphiconConfirmCommand("DeleteArtist" + "?id=" + artist.Id, "partialRefresh.command", "glyphicon-red glyphicon-remove", "Supprmer l'artiste " + artist.Name)
+
+        }
     </div>  
  }
