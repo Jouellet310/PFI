@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<MySpace.Models.Video>
 
 @{
+    var DB = new MySpace.Models.MySpaceDBEntities();
+    var currentArtistId = DB.Artists.Where(a => a.UserId == MySpace.Models.OnlineUsers.CurrentUserId).First().Id;
+
     ViewBag.Title = "Videos";
 }
 
@@ -14,11 +17,9 @@
     }
     else
     {
-
-        foreach (var video in Model)
+        foreach (var video in Model.Where(e => e.ArtistId == currentArtistId))
         {
             <div class="row">
-
                 <div class="col-md-1">
                     @video.Title
                 </div>
